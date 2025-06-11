@@ -81,24 +81,7 @@ function checkMEController()
         print("⚠️ getItemsInNetwork() недоступен")
     end
     
-    -- Проверяем жидкости в сети
-    if me.getFluidsInNetwork then
-        local success, fluids = pcall(me.getFluidsInNetwork)
-        if success then
-            print("✅ Жидкости в сети: " .. #fluids .. " типов")
-            if #fluids > 0 then
-                print("   Примеры жидкостей:")
-                for i = 1, math.min(3, #fluids) do
-                    local fluid = fluids[i]
-                    print("   - " .. (fluid.label or fluid.name or "Неизвестная") .. " x" .. (fluid.amount or 0) .. "mB")
-                end
-            end
-        else
-            print("❌ Ошибка getFluidsInNetwork(): " .. fluids)
-        end
-    else
-        print("⚠️ getFluidsInNetwork() недоступен")
-    end
+
     
     -- Проверяем CPU
     if me.getCpus then
@@ -226,26 +209,7 @@ function analyzeNetwork()
         print()
     end
     
-    -- Анализ жидкостей
-    local success, fluids = pcall(me.getFluidsInNetwork)
-    if success then
-        print("🌊 ЖИДКОСТИ В СЕТИ:")
-        print("Всего типов жидкостей: " .. #fluids)
-        
-        if #fluids > 0 then
-            -- Сортируем по количеству
-            table.sort(fluids, function(a, b) return (a.amount or 0) > (b.amount or 0) end)
-            
-            print("Топ-3 жидкости по объему:")
-            for i = 1, math.min(3, #fluids) do
-                local fluid = fluids[i]
-                local name = fluid.label or fluid.name or "Неизвестная"
-                local amount = fluid.amount or 0
-                print(string.format("  %d. %s - %d mB", i, name, amount))
-            end
-        end
-        print()
-    end
+
     
     -- Анализ процессоров
     local success, cpus = pcall(me.getCpus)
